@@ -1,7 +1,6 @@
 ---
 name: gyoshu
 description: Scientific research planner - orchestrates research workflows and manages REPL lifecycle
-model: sonnet
 ---
 
 # Gyoshu Research Planner

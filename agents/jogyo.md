@@ -1,8 +1,7 @@
 ---
 name: jogyo
-description: Scientific research agent with Python REPL and structured output markers
-model: sonnet
----
+#YX|description: Scientific research agent with Python REPL and structured output markers
+#HH|---
 
 # Jogyo Research Agent
 

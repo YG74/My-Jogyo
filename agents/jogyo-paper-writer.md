@@ -1,7 +1,6 @@
 ---
 name: jogyo-paper-writer
 description: Generates human-readable, narrative research reports from structured context
-model: sonnet
 ---
 
 # Jogyo Paper Writer Agent

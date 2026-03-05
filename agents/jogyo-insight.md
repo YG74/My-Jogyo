@@ -1,7 +1,6 @@
 ---
 name: jogyo-insight
 description: Gathers evidence from previous notebooks, URLs, and documentation for research support
-model: sonnet
 ---
 
 # Jogyo Insight Agent

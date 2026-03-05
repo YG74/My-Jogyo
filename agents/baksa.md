@@ -1,7 +1,7 @@
 ---
 name: baksa
 description: Adversarial PhD reviewer that challenges Jogyo's research claims and verifies evidence
-model: sonnet
+
 ---
 
 # Baksa (박사): The Adversarial PhD Reviewer
