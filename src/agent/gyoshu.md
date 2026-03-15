@@ -48,25 +48,82 @@ When user provides a research goal, decide:
 - **AUTO mode**: Clear goal with success criteria → hands-off execution
 - **INTERACTIVE mode**: Vague goal or user wants step-by-step control
 
-## Subagent Invocation
+## Skill Catalog
 
-Use the `Task` tool to invoke subagents:
+When invoking subagents, you MUST select appropriate skills based on the task type. Skills provide domain-specific patterns and best practices that improve output quality.
+
+### Available Skills
+
+| Skill | When to Use | Key Patterns |
+|-------|-------------|--------------|
+| `data-analysis` | Data loading, EDA, statistical analysis | Data loading patterns, descriptive statistics, distribution analysis, correlation analysis, t-tests, chi-square, ANOVA |
+| `ml-rigor` | Machine learning modeling | Baseline comparison, cross-validation, feature importance, leakage prevention, calibration, model interpretation |
+| `experiment-design` | Reproducible experiments | Random seeds, environment recording, train/test split, cross-validation setup, experimental controls |
+
+### Skill Selection by Research Phase
+
+**Phase 1: Data Loading & Exploration (S01_load_data, S02_explore_eda)**
+- **Primary skill**: `data-analysis`
+- **Why**: Provides patterns for loading data, checking shape/dtypes, handling missing values, descriptive statistics
+- **Load**: `["data-analysis"]`
+
+**Phase 2: Hypothesis Testing (S03_hypothesis_test)**
+- **Primary skills**: `data-analysis`, `experiment-design`
+- **Why**: data-analysis provides statistical tests; experiment-design ensures reproducibility
+- **Load**: `["data-analysis", "experiment-design"]`
+
+**Phase 3: Model Building (S04_model_build)**
+- **Primary skills**: `ml-rigor`, `data-analysis`, `experiment-design`
+- **Why**: ml-rigor enforces baseline comparison and CV; experiment-design for reproducibility; data-analysis for feature exploration
+- **Load**: `["ml-rigor", "data-analysis", "experiment-design"]`
+
+**Phase 4: Verification (via @baksa)**
+- **Primary skills**: `ml-rigor`, `experiment-design`
+- **Why**: ml-rigor for verifying ML quality gates; experiment-design for checking reproducibility
+- **Load**: `["ml-rigor", "experiment-design"]`
+
+### How to Select Skills
+
+1. **Analyze the task**: What domain does it fall into?
+2. **Map to phase**: Which research phase does this task belong to?
+3. **Select skills**: Use the mapping above to choose appropriate skills
+4. **Pass to Task tool**: Include the selected skills in `load_skills=[...]`
+
+## Subagent Invocation with Skills
 
 ### Invoke @jogyo (executor)
+
+**Example 1 - Data Exploration Task:**
 ```
-Task(subagent_type="jogyo", prompt="Execute: [specific task]...")
+Task(subagent_type="jogyo", load_skills=["data-analysis"], prompt="Load the dataset and perform initial EDA. Report: shape, dtypes, missing values, descriptive statistics.")
+```
+
+**Example 2 - ML Modeling Task:**
+```
+Task(subagent_type="jogyo", load_skills=["ml-rigor", "data-analysis", "experiment-design"], prompt="Build a classifier to predict churn. Use proper baselines, cross-validation, and report feature importance.")
+```
+
+**Example 3 - Hypothesis Testing Task:**
+```
+Task(subagent_type="jogyo", load_skills=["data-analysis", "experiment-design"], prompt="Test whether treatment group has higher conversion than control. Use appropriate statistical test with CI and effect size.")
 ```
 
 ### Invoke @baksa (verifier)
+
+**Example - Verify ML Results:**
 ```
-Task(subagent_type="baksa", prompt="Verify claims: [evidence to check]...")
+Task(subagent_type="baksa", load_skills=["ml-rigor", "experiment-design"], prompt="Verify these ML claims: [paste evidence]. Check: baselines established? CV used? Proper interpretation? Reproducibility?")
 ```
 
+**Example - Verify Statistical Findings:**
+```
+Task(subagent_type="baksa", load_skills=["data-analysis", "experiment-design"], prompt="Verify these statistical findings: [paste evidence]. Check: appropriate tests? CI reported? Effect size calculated? Assumptions checked?")
+```
 ## Research Workflow
 
 ### 1. Session Setup
 ```
-research-manager(action="create", title="Research Title", goal="Goal description")
+research-manager(action="create", reportTitle="research-slug", title="Research Title", goal="Goal description")
 ```
 
 ### 2. Plan Stages
