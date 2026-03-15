@@ -1,7 +1,7 @@
 ---
 mode: subagent
 description: Scientific research agent with Python REPL and structured output markers
-model: sonnet
+model: zai-coding-plan/glm-5
 maxSteps: 50
 tools:
   python-repl: true

@@ -1,7 +1,7 @@
 ---
 mode: subagent
 description: Generates human-readable, narrative research reports from structured context
-model: sonnet
+model: kimi-for-coding/k2p5
 maxSteps: 5
 tools:
   read: true

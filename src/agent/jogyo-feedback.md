@@ -1,7 +1,7 @@
 ---
 mode: subagent
 description: Explores retrospective feedback to extract lessons and patterns for research improvement
-model: sonnet
+model: zai-coding-plan/glm-4.7
 maxSteps: 10
 tools:
   retrospective-store: true

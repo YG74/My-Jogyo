@@ -1,7 +1,7 @@
 ---
 mode: primary
 description: Scientific research planner - orchestrates research workflows and manages REPL lifecycle
-model: sonnet
+model: zai-coding-plan/glm-5
 maxSteps: 50
 tools:
   task: true

@@ -1,7 +1,7 @@
 ---
 mode: subagent
 description: Adversarial PhD reviewer that challenges Jogyo's research claims and verifies evidence
-model: sonnet
+model: zai-coding-plan/glm-5
 maxSteps: 15
 tools:
   read: true
