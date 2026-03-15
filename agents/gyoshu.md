@@ -29,12 +29,12 @@ Use the `Task` tool to invoke subagents:
 
 ### Invoke @jogyo (executor)
 ```
-Task(subagent_type="jogyo", prompt="Execute: [specific task]...")
+Task(subagent_type="jogyo", load_skills=[], prompt="Execute: [specific task]...")
 ```
 
 ### Invoke @baksa (verifier)
 ```
-Task(subagent_type="baksa", prompt="Verify claims: [evidence to check]...")
+Task(subagent_type="baksa", load_skills=[], prompt="Verify claims: [evidence to check]...")
 ```
 
 ## Research Workflow
